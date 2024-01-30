@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Encryption App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Image Encryption App</h1>
+    
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="image">Choose an image:</label>
+        <input type="file" name="image" accept="image/*" required>
+        <button type="submit">Encrypt Image</button>
+    </form>
+
+    {% if encrypted_image %}
+        <h2>Encrypted Image:</h2>
+        <img src="{{ encrypted_image }}" alt="Encrypted Image">
+        <a href="{{ encrypted_image }}" download="encrypted_image.png">Download Encrypted Image</a>
+        
+        <form action="/decrypt" method="post">
+            <input type="hidden" name="encrypted_image" value="{{ encrypted_image }}">
+            <button type="submit">Decrypt Image</button>
+        </form>
+
+        {% if decrypted_image %}
+            <h2>Decrypted Image:</h2>
+            <img src="{{ decrypted_image }}" alt="Decrypted Image">
+            <a href="{{ decrypted_image }}" download="decrypted_image.png">Download Decrypted Image</a>
+        {% endif %}
+    {% endif %}
+</body>
+</html>
